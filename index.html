@@ -2,43 +2,54 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>Інформація про відвідувача</title>
+  <title>Інформаційна панель погоди</title>
   <style>
-    body { font-family: sans-serif; margin: 40px; background: #f9f9f9; color: #333; }
+    body { font-family: sans-serif; background: #f5f5f5; color: #333; padding: 30px; transition: background 0.3s, color 0.3s; }
     h1 { color: #2c3e50; }
-    table { border-collapse: collapse; width: 100%; max-width: 700px; margin-top: 20px; }
-    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 10px; }
+    table { margin-top: 10px; width: 100%; max-width: 600px; }
     th { background: #eee; }
+    .dark { background: #121212; color: #eee; }
+    .dark th { background: #333; }
+    #map { width: 100%; height: 300px; margin-top: 20px; border: none; }
+    button { margin-top: 20px; padding: 10px 20px; font-size: 1em; }
+    #weather-icon { font-size: 2em; }
   </style>
 </head>
 <body>
-  <h1>Ваші дані</h1>
+  <h1>🌤️ Погода та інформація про вас</h1>
+  <div id="clock">Час: ...</div>
+  <div id="weather">Завантаження погоди…</div>
+  <div id="weather-icon"></div>
+  <div id="wind-dir" style="font-size:2em;">🧭</div>
+
+  <h2>📆 Прогноз на 3 дні</h2>
+  <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>
+
+  <h2>🧭 Карта місцезнаходження</h2>
+  <iframe id="map"></iframe>
+
+  <h2>👤 Ваша інформація</h2>
   <table>
-    <tr><th>Параметр</th><th>Значення</th></tr>
-    <tr><td>IP-адреса</td><td id="ip">Завантаження…</td></tr>
-    <tr><td>Місто</td><td id="city">Завантаження…</td></tr>
-    <tr><td>Країна</td><td id="country">Завантаження…</td></tr>
-    <tr><td>Браузер</td><td id="browser"></td></tr>
-    <tr><td>Операційна система</td><td id="os"></td></tr>
-    <tr><td>Часовий пояс</td><td id="timezone"></td></tr>
+    <tr><th>IP</th><td id="ip">-</td></tr>
+    <tr><th>Місто</th><td id="city">-</td></tr>
+    <tr><th>Країна</th><td id="country">-</td></tr>
+    <tr><th>Браузер</th><td id="browser">-</td></tr>
+    <tr><th>ОС</th><td id="os">-</td></tr>
+    <tr><th>Часовий пояс</th><td id="timezone">-</td></tr>
   </table>
 
-  <script>
-    // Отримання IP та геолокації через API ipwho.is
-    fetch('https://ipwho.is/')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('ip').textContent = data.ip || 'Недоступно';
-        document.getElementById('city').textContent = data.city || 'Недоступно';
-        document.getElementById('country').textContent = data.country || 'Недоступно';
-      })
-      .catch(() => {
-        document.getElementById('ip').textContent = 'Помилка';
-        document.getElementById('city').textContent = 'Помилка';
-        document.getElementById('country').textContent = 'Помилка';
-      });
+  <button onclick="toggleTheme()">🌗 Перемкнути тему</button>
 
-    // Визначення браузера та ОС
+  <script>
+    // Годинник
+    function updateClock() {
+      document.getElementById('clock').textContent = "Час: " + new Date().toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Браузер, ОС, час. пояс
     const ua = navigator.userAgent;
     const platform = navigator.platform;
     let browser = 'Невідомо';
@@ -48,9 +59,62 @@
     else if (ua.includes("Safari")) browser = "Safari";
     document.getElementById('browser').textContent = browser;
     document.getElementById('os').textContent = platform;
-
-    // Часовий пояс
     document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Темна тема
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+
+    // Отримуємо координати та IP
+    fetch('https://ipwho.is/')
+      .then(res => res.json())
+      .then(location => {
+        const lat = location.latitude;
+        const lon = location.longitude;
+        const city = location.city;
+        const country = location.country;
+        document.getElementById('ip').textContent = location.ip;
+        document.getElementById('city').textContent = city;
+        document.getElementById('country').textContent = country;
+
+        // Карта
+        document.getElementById("map").src =
+          `https://www.openstreetmap.org/export/embed.html?bbox=${lon-0.02}%2C${lat-0.02}%2C${lon+0.02}%2C${lat+0.02}&layer=mapnik&marker=${lat}%2C${lon}`;
+
+        // Поточна погода
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
+          .then(res => res.json())
+          .then(data => {
+            const weather = data.current_weather;
+            const code = weather.weathercode;
+            const icons = {
+              0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️",
+              45: "🌫️", 48: "🌫️", 51: "🌦️", 61: "🌧️",
+              71: "❄️", 80: "🌧️", 95: "⛈️"
+            };
+            document.getElementById('weather-icon').textContent = icons[code] || "❓";
+
+            document.getElementById('weather').innerHTML =
+              `🌡️ Температура: <strong>${weather.temperature}°C</strong><br>` +
+              `💨 Вітер: ${weather.windspeed} км/год`;
+
+            document.getElementById('wind-dir').style.transform = `rotate(${weather.winddirection}deg)`;
+
+            // Прогноз
+            const dates = data.daily.time;
+            const max = data.daily.temperature_2m_max;
+            const min = data.daily.temperature_2m_min;
+            let rows = '';
+            for (let i = 0; i < 3; i++) {
+              rows += `<tr><td>${dates[i]}</td><td>${max[i]}°C</td><td>${min[i]}°C</td></tr>`;
+            }
+            document.getElementById('forecast').innerHTML += rows;
+          });
+      })
+      .catch(() => {
+        document.getElementById('weather').textContent = 'Не вдалося визначити місцезнаходження.';
+      });
   </script>
 </body>
 </html>
