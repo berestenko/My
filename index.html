@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Інформація про відвідувача</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; background: #f9f9f9; color: #333; }
+    h1 { color: #2c3e50; }
+    table { border-collapse: collapse; width: 100%; max-width: 700px; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Ваші дані</h1>
+  <table>
+    <tr><th>Параметр</th><th>Значення</th></tr>
+    <tr><td>IP-адреса</td><td id="ip">Завантаження…</td></tr>
+    <tr><td>Місто</td><td id="city">Завантаження…</td></tr>
+    <tr><td>Країна</td><td id="country">Завантаження…</td></tr>
+    <tr><td>Браузер</td><td id="browser"></td></tr>
+    <tr><td>Операційна система</td><td id="os"></td></tr>
+    <tr><td>Часовий пояс</td><td id="timezone"></td></tr>
+  </table>
+
+  <script>
+    // Отримання IP та геолокації через API ipwho.is
+    fetch('https://ipwho.is/')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('ip').textContent = data.ip || 'Недоступно';
+        document.getElementById('city').textContent = data.city || 'Недоступно';
+        document.getElementById('country').textContent = data.country || 'Недоступно';
+      })
+      .catch(() => {
+        document.getElementById('ip').textContent = 'Помилка';
+        document.getElementById('city').textContent = 'Помилка';
+        document.getElementById('country').textContent = 'Помилка';
+      });
+
+    // Визначення браузера та ОС
+    const ua = navigator.userAgent;
+    const platform = navigator.platform;
+    let browser = 'Невідомо';
+    if (ua.includes("Firefox")) browser = "Firefox";
+    else if (ua.includes("Edg")) browser = "Edge";
+    else if (ua.includes("Chrome")) browser = "Chrome";
+    else if (ua.includes("Safari")) browser = "Safari";
+    document.getElementById('browser').textContent = browser;
+    document.getElementById('os').textContent = platform;
+
+    // Часовий пояс
+    document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  </script>
+</body>
+</html>
