@@ -1,12 +1,12 @@
 <!DOCTYPE html><html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>Інформаційна панель погоди та пристрою</title>
+  <title>Інформаційна панель погоди</title>
   <style>
     body { font-family: sans-serif; background: #f5f5f5; color: #333; padding: 30px; transition: background 0.3s, color 0.3s; }
     h1 { color: #2c3e50; }
     table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 10px; }
-    table { margin-top: 10px; width: 100%; max-width: 800px; }
+    table { margin-top: 10px; width: 100%; max-width: 900px; }
     th { background: #eee; }
     .dark { background: #121212; color: #eee; }
     .dark th { background: #333; }
@@ -23,7 +23,7 @@
   <div id="wind-dir" style="font-size:2em;">🧭</div>  <h2>📆 Прогноз на 3 дні</h2>
   <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  <h2>🧭 Карта місцезнаходження</h2>
   <iframe id="map"></iframe>  <h2>👤 Ваша інформація</h2>
-  <table>
+  <table id="userinfo">
     <tr><th>IP</th><td id="ip">-</td></tr>
     <tr><th>Місто</th><td id="city">-</td></tr>
     <tr><th>Країна</th><td id="country">-</td></tr>
@@ -31,17 +31,17 @@
     <tr><th>ОС</th><td id="os">-</td></tr>
     <tr><th>Часовий пояс</th><td id="timezone">-</td></tr>
     <tr><th>Роздільна здатність</th><td id="resolution">-</td></tr>
-    <tr><th>Розмір вікна</th><td id="windowSize">-</td></tr>
+    <tr><th>DPI</th><td id="dpi">-</td></tr>
     <tr><th>Ядер CPU</th><td id="cpu">-</td></tr>
-    <tr><th>GPU</th><td id="gpu">-</td></tr>
-    <tr><th>WebGL Вендор</th><td id="glVendor">-</td></tr>
-    <tr><th>Тип пристрою</th><td id="deviceType">-</td></tr>
-    <tr><th>Мова браузера</th><td id="lang">-</td></tr>
-    <tr><th>Статус онлайн</th><td id="online">-</td></tr>
-    <tr><th>Тип з'єднання</th><td id="connType">-</td></tr>
-    <tr><th>Швидкість з'єднання</th><td id="connDown">-</td></tr>
+    <tr><th>RAM</th><td id="ram">-</td></tr>
+    <tr><th>Touch Points</th><td id="touch">-</td></tr>
+    <tr><th>Мова</th><td id="lang">-</td></tr>
+    <tr><th>Куки</th><td id="cookies">-</td></tr>
+    <tr><th>Vendor</th><td id="vendor">-</td></tr>
+    <tr><th>Тип мережі</th><td id="nettype">-</td></tr>
+    <tr><th>Швидкість</th><td id="netspeed">-</td></tr>
+    <tr><th>Ping</th><td id="rtt">-</td></tr>
     <tr><th>Батарея</th><td id="battery">-</td></tr>
-    <tr><th>Заряджається</th><td id="charging">-</td></tr>
   </table><button onclick="toggleTheme()">🌗 Перемкнути тему</button>
 
   <script>
@@ -51,74 +51,53 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    // Базова інфа
     const ua = navigator.userAgent;
     const platform = navigator.platform;
-    const language = navigator.language;
-    const resolution = screen.width + 'x' + screen.height;
-    const deviceType = /Mobi|Android/i.test(ua) ? "Мобільний" : "ПК/Планшет";
     let browser = 'Невідомо';
     if (ua.includes("Firefox")) browser = "Firefox";
     else if (ua.includes("Edg")) browser = "Edge";
     else if (ua.includes("Chrome")) browser = "Chrome";
     else if (ua.includes("Safari")) browser = "Safari";
-
     document.getElementById('browser').textContent = browser;
     document.getElementById('os').textContent = platform;
     document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    document.getElementById('resolution').textContent = resolution;
-    document.getElementById('windowSize').textContent = window.innerWidth + 'x' + window.innerHeight;
-    document.getElementById('cpu').textContent = navigator.hardwareConcurrency || 'Невідомо';
-    document.getElementById('lang').textContent = language;
-    document.getElementById('deviceType').textContent = deviceType;
-    document.getElementById('online').textContent = navigator.onLine ? 'Онлайн' : 'Офлайн';
+    document.getElementById('resolution').textContent = screen.width + 'x' + screen.height;
+    document.getElementById('dpi').textContent = window.devicePixelRatio;
+    document.getElementById('cpu').textContent = navigator.hardwareConcurrency + ' ядер';
+    document.getElementById('ram').textContent = navigator.deviceMemory ? navigator.deviceMemory + ' ГБ' : 'Н/Д';
+    document.getElementById('touch').textContent = navigator.maxTouchPoints;
+    document.getElementById('lang').textContent = navigator.language + ' (' + navigator.languages.join(', ') + ')';
+    document.getElementById('cookies').textContent = navigator.cookieEnabled ? 'Так' : 'Ні';
+    document.getElementById('vendor').textContent = navigator.vendor;
 
-    // З'єднання
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if (conn) {
-      document.getElementById('connType').textContent = conn.effectiveType;
-      document.getElementById('connDown').textContent = conn.downlink + ' Мбіт/с';
+    if ('connection' in navigator) {
+      const conn = navigator.connection;
+      document.getElementById('nettype').textContent = conn.effectiveType;
+      document.getElementById('netspeed').textContent = conn.downlink + ' Мбіт/с';
+      document.getElementById('rtt').textContent = conn.rtt + ' мс';
     }
 
-    // WebGL та GPU
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (gl) {
-        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-        const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-        const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-        document.getElementById('glVendor').textContent = vendor;
-        document.getElementById('gpu').textContent = renderer;
-      }
-    } catch (e) {
-      document.getElementById('gpu').textContent = 'Невідомо';
-    }
-
-    // Battery API
     if ('getBattery' in navigator) {
-      navigator.getBattery().then(battery => {
-        document.getElementById('battery').textContent = (battery.level * 100).toFixed(0) + '%';
-        document.getElementById('charging').textContent = battery.charging ? 'Так' : 'Ні';
+      navigator.getBattery().then(bat => {
+        const charge = Math.round(bat.level * 100) + '%';
+        const charging = bat.charging ? ' (заряджається)' : ' (не заряджається)';
+        document.getElementById('battery').textContent = charge + charging;
       });
     }
 
-    // Темна тема
     function toggleTheme() {
       document.body.classList.toggle('dark');
     }
 
-    // Геолокація та погода
     fetch('https://ipwho.is/')
       .then(res => res.json())
       .then(location => {
         const lat = location.latitude;
         const lon = location.longitude;
-        const city = location.city;
-        const country = location.country;
         document.getElementById('ip').textContent = location.ip;
-        document.getElementById('city').textContent = city;
-        document.getElementById('country').textContent = country;
-
+        document.getElementById('city').textContent = location.city;
+        document.getElementById('country').textContent = location.country;
         document.getElementById("map").src =
           `https://www.openstreetmap.org/export/embed.html?bbox=${lon-0.02}%2C${lat-0.02}%2C${lon+0.02}%2C${lat+0.02}&layer=mapnik&marker=${lat}%2C${lon}`;
 
