@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="uk">
+<!DOCTYPE html><html lang="uk">
 <head>
   <meta charset="UTF-8" />
   <title>Інформаційна панель погоди</title>
@@ -7,7 +6,7 @@
     body { font-family: sans-serif; background: #f5f5f5; color: #333; padding: 30px; transition: background 0.3s, color 0.3s; }
     h1 { color: #2c3e50; }
     table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 10px; }
-    table { margin-top: 10px; width: 100%; max-width: 600px; }
+    table { margin-top: 10px; width: 100%; max-width: 800px; }
     th { background: #eee; }
     .dark { background: #121212; color: #eee; }
     .dark th { background: #333; }
@@ -21,22 +20,10 @@
   <div id="clock">Час: ...</div>
   <div id="weather">Завантаження погоди…</div>
   <div id="weather-icon"></div>
-  <div id="wind-dir" style="font-size:2em;">🧭</div>
-
-  <h2>📆 Прогноз на 3 дні</h2>
-  <table id="forecast">
-    <tr><th>Дата</th><th>Макс</th><th>Мін</th></tr>
-  </table>
-
-  <h2>📜 Історія погоди (останні 7 днів)</h2>
-  <table id="history">
-    <tr><th>Дата</th><th>Макс</th><th>Мін</th><th>Опади</th><th>Вітер</th></tr>
-  </table>
-
-  <h2>🧭 Карта місцезнаходження</h2>
-  <iframe id="map"></iframe>
-
-  <h2>👤 Ваша інформація</h2>
+  <div id="wind-dir" style="font-size:2em;">🧭</div>  <h2>📆 Прогноз на 3 дні</h2>
+  <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  <h2>📜 Історія погоди</h2>
+  <table id="history"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  <h2>🧭 Карта місцезнаходження</h2>
+  <iframe id="map"></iframe>  <h2>👤 Ваша інформація</h2>
   <table>
     <tr><th>IP</th><td id="ip">-</td></tr>
     <tr><th>Місто</th><td id="city">-</td></tr>
@@ -44,15 +31,16 @@
     <tr><th>Браузер</th><td id="browser">-</td></tr>
     <tr><th>ОС</th><td id="os">-</td></tr>
     <tr><th>Часовий пояс</th><td id="timezone">-</td></tr>
-    <tr><th>Роздільна здатність</th><td id="resolution">-</td></tr>
-    <tr><th>Кількість ядер CPU</th><td id="cpuCores">-</td></tr>
-    <tr><th>ОЗП</th><td id="ram">-</td></tr>
-    <tr><th>WebGL підтримка</th><td id="webgl">-</td></tr>
-    <tr><th>Камера</th><td id="camera">-</td></tr>
-    <tr><th>Мікрофон</th><td id="microphone">-</td></tr>
-  </table>
-
-  <button onclick="toggleTheme()">🌗 Перемкнути тему</button>
+    <tr><th>Тип з'єднання</th><td id="connection">-</td></tr>
+    <tr><th>Швидкість з'єднання</th><td id="speed">-</td></tr>
+    <tr><th>Екран</th><td id="screen">-</td></tr>
+    <tr><th>Вікно</th><td id="window">-</td></tr>
+    <tr><th>Сенсорний ввід</th><td id="touch">-</td></tr>
+    <tr><th>CPU ядра</th><td id="cpu">-</td></tr>
+    <tr><th>Заряд батареї</th><td id="battery">-</td></tr>
+    <tr><th>Останній візит</th><td id="lastvisit">-</td></tr>
+    <tr><th>Кількість відвідувань</th><td id="visits">-</td></tr>
+  </table><button onclick="toggleTheme()">🌗 Перемкнути тему</button>
 
   <script>
     // Годинник
@@ -62,117 +50,76 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Браузер, ОС, час. пояс
+    // Тема
+    function toggleTheme() { document.body.classList.toggle('dark'); }
+
+    // Info
     const ua = navigator.userAgent;
     const platform = navigator.platform;
-    let browser = 'Невідомо';
-    if (ua.includes("Firefox")) browser = "Firefox";
-    else if (ua.includes("Edg")) browser = "Edge";
-    else if (ua.includes("Chrome")) browser = "Chrome";
-    else if (ua.includes("Safari")) browser = "Safari";
+    const browser = ua.includes("Firefox") ? "Firefox" : ua.includes("Edg") ? "Edge" : ua.includes("Chrome") ? "Chrome" : ua.includes("Safari") ? "Safari" : "Невідомо";
     document.getElementById('browser').textContent = browser;
     document.getElementById('os').textContent = platform;
     document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.getElementById('screen').textContent = screen.width + 'x' + screen.height;
+    document.getElementById('window').textContent = innerWidth + 'x' + innerHeight;
+    document.getElementById('touch').textContent = ('ontouchstart' in window) ? 'Так' : 'Ні';
+    document.getElementById('cpu').textContent = navigator.hardwareConcurrency || 'Невідомо';
 
-    // Роздільна здатність екрану та CPU
-    document.getElementById('resolution').textContent = `${window.screen.width}x${window.screen.height}`;
-    document.getElementById('cpuCores').textContent = navigator.hardwareConcurrency || 'Невідомо';
-
-    // ОЗП
-    document.getElementById('ram').textContent = `${navigator.deviceMemory || 'Невідомо'} GB`;
-
-    // WebGL підтримка
-    document.getElementById('webgl').textContent = (typeof WebGLRenderingContext !== 'undefined') ? 'Підтримується' : 'Не підтримується';
-
-    // Камера та мікрофон
-    navigator.mediaDevices.enumerateDevices().then(devices => {
-      const camera = devices.some(device => device.kind === 'videoinput');
-      const microphone = devices.some(device => device.kind === 'audioinput');
-      document.getElementById('camera').textContent = camera ? 'Є' : 'Немає';
-      document.getElementById('microphone').textContent = microphone ? 'Є' : 'Немає';
-    });
-
-    // Темна тема
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
+    // З'єднання
+    if (navigator.connection) {
+      document.getElementById('connection').textContent = navigator.connection.effectiveType;
+      document.getElementById('speed').textContent = (navigator.connection.downlink || '-') + ' Mbps';
     }
 
-    // Отримуємо координати та IP
+    // Відвідування
+    let visits = localStorage.getItem('visits') || 0;
+    visits++;
+    localStorage.setItem('visits', visits);
+    document.getElementById('visits').textContent = visits;
+    const last = localStorage.getItem('lastVisit');
+    document.getElementById('lastvisit').textContent = last ? new Date(last).toLocaleString() : 'Перше відвідування';
+    localStorage.setItem('lastVisit', new Date().toISOString());
+
+    // Батарея
+    if (navigator.getBattery) {
+      navigator.getBattery().then(b => {
+        document.getElementById('battery').textContent = (b.level * 100).toFixed(0) + '% ' + (b.charging ? '⚡' : '🔋');
+      });
+    }
+
+    // Гео + погода
     fetch('https://ipwho.is/')
       .then(res => res.json())
       .then(location => {
-        const lat = location.latitude;
-        const lon = location.longitude;
-        const city = location.city;
-        const country = location.country;
+        const lat = location.latitude, lon = location.longitude;
         document.getElementById('ip').textContent = location.ip;
-        document.getElementById('city').textContent = city;
-        document.getElementById('country').textContent = country;
+        document.getElementById('city').textContent = location.city;
+        document.getElementById('country').textContent = location.country;
 
-        // Карта
         document.getElementById("map").src =
           `https://www.openstreetmap.org/export/embed.html?bbox=${lon-0.02}%2C${lat-0.02}%2C${lon+0.02}%2C${lat+0.02}&layer=mapnik&marker=${lat}%2C${lon}`;
 
-        // Поточна погода
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&past_days=3&timezone=auto`)
           .then(res => res.json())
           .then(data => {
-            const weather = data.current_weather;
-            const code = weather.weathercode;
-            const icons = {
-              0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️",
-              45: "🌫️", 48: "🌫️", 51: "🌦️", 61: "🌧️",
-              71: "❄️", 80: "🌧️", 95: "⛈️"
-            };
-            document.getElementById('weather-icon').textContent = icons[code] || "❓";
-
+            const w = data.current_weather;
+            const icon = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',61:'🌧️',71:'❄️',80:'🌧️',95:'⛈️'}[w.weathercode] || '❓';
+            document.getElementById('weather-icon').textContent = icon;
             document.getElementById('weather').innerHTML =
-              `🌡️ Температура: <strong>${weather.temperature}°C</strong><br>` +
-              `💨 Вітер: ${weather.windspeed} км/год`;
+              `🌡️ Температура: <strong>${w.temperature}°C</strong><br>💨 Вітер: ${w.windspeed} км/год`;
+            document.getElementById('wind-dir').style.transform = `rotate(${w.winddirection}deg)`;
 
-            document.getElementById('wind-dir').style.transform = `rotate(${weather.winddirection}deg)`;
-
-            // Прогноз
-            const dates = data.daily.time;
-            const max = data.daily.temperature_2m_max;
-            const min = data.daily.temperature_2m_min;
-            let rows = '';
-            for (let i = 0; i < 3; i++) {
-              rows += `<tr><td>${dates[i]}</td><td>${max[i]}°C</td><td>${min[i]}°C</td></tr>`;
+            const f = data.daily;
+            let forecastRows = '', historyRows = '';
+            for (let i = 0; i < f.time.length; i++) {
+              const row = `<tr><td>${f.time[i]}</td><td>${f.temperature_2m_max[i]}°C</td><td>${f.temperature_2m_min[i]}°C</td></tr>`;
+              if (i < 3) forecastRows += row;
+              else historyRows += row;
             }
-            document.getElementById('forecast').innerHTML += rows;
-          });
-
-        // Історія погоди (останні 7 днів)
-        const today = new Date();
-        const endDate = today.toISOString().split('T')[0];
-        const startDate = new Date(today.setDate(today.getDate() - 7)).toISOString().split('T')[0];
-
-        fetch(`https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${startDate}&end_date=${endDate}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max&timezone=auto`)
-          .then(res => res.json())
-          .then(data => {
-            const dates = data.daily.time;
-            const maxTemps = data.daily.temperature_2m_max;
-            const minTemps = data.daily.temperature_2m_min;
-            const precipitation = data.daily.precipitation_sum;
-            const windspeed = data.daily.windspeed_10m_max;
-
-            let rows = '';
-            for (let i = 0; i < dates.length; i++) {
-              rows += `<tr>
-                <td>${dates[i]}</td>
-                <td>${maxTemps[i]}°C</td>
-                <td>${minTemps[i]}°C</td>
-                <td>${precipitation[i]} мм</td>
-                <td>${windspeed[i]} км/год</td>
-              </tr>`;
-            }
-            document.getElementById('history').innerHTML += rows;
+            document.getElementById('forecast').innerHTML += forecastRows;
+            document.getElementById('history').innerHTML += historyRows;
           });
       })
-      .catch(() => {
-        document.getElementById('weather').textContent = 'Не вдалося визначити місцезнаходження.';
-      });
-  </script>
-</body>
+      .catch(() => document.getElementById('weather').textContent = 'Не вдалося отримати геодані.');
+  </script></body>
 </html>
