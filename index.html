@@ -39,6 +39,24 @@
     <tr><th>Швидкість</th><td id="netspeed">-</td></tr>
     <tr><th>Ping</th><td id="rtt">-</td></tr>
     <tr><th>Батарея</th><td id="battery">-</td></tr>
+    <tr><th>User Agent</th><td id="userAgent">-</td></tr>
+    <tr><th>App Version</th><td id="appVersion">-</td></tr>
+    <tr><th>App Name</th><td id="appName">-</td></tr>
+    <tr><th>WebGL підтримка</th><td id="webglSupport">-</td></tr>
+    <tr><th>Буфер обміну</th><td id="clipboardSupport">-</td></tr>
+    <tr><th>Геолокація</th><td id="geolocationSupport">-</td></tr>
+    <tr><th>Do Not Track</th><td id="doNotTrack">-</td></tr>
+    <tr><th>Орієнтація екрана</th><td id="orientation">-</td></tr>
+    <tr><th>GPU</th><td id="gpu">-</td></tr>
+    <tr><th>WebRTC підтримка</th><td id="webrtc">-</td></tr>
+    <tr><th>WebAssembly підтримка</th><td id="wasm">-</td></tr>
+    <tr><th>Service Workers</th><td id="sw">-</td></tr>
+    <tr><th>LocalStorage</th><td id="localstorage">-</td></tr>
+    <tr><th>IndexedDB</th><td id="indexeddb">-</td></tr>
+    <tr><th>JavaScript</th><td id="js">Так</td></tr>
+    <tr><th>Розмір вікна</th><td id="windowSize">-</td></tr>
+    <tr><th>Історія переходів</th><td id="historyLength">-</td></tr>
+
   </table>
 
   <h2>🧭 Місцезнаходження</h2>
@@ -81,6 +99,24 @@
     document.getElementById('lang').textContent = navigator.language + ' (' + navigator.languages.join(', ') + ')';
     document.getElementById('cookies').textContent = navigator.cookieEnabled ? 'Так' : 'Ні';
     document.getElementById('vendor').textContent = navigator.vendor;
+    document.getElementById('userAgent').textContent = navigator.userAgent;
+    document.getElementById('appVersion').textContent = navigator.appVersion;
+    document.getElementById('appName').textContent = navigator.appName;
+    document.getElementById('webglSupport').textContent = !!window.WebGLRenderingContext ? 'Так' : 'Ні';
+    document.getElementById('clipboardSupport').textContent = 'clipboard' in navigator ? 'Так' : 'Ні';
+    document.getElementById('geolocationSupport').textContent = 'geolocation' in navigator ? 'Так' : 'Ні';
+    document.getElementById('doNotTrack').textContent = navigator.doNotTrack === '1' ? 'Так' : 'Ні';
+    document.getElementById('orientation').textContent = screen.orientation ? screen.orientation.type : 'Н/Д';
+    document.getElementById('gpu').textContent = getGPUInfo();
+    document.getElementById('webrtc').textContent = 'RTCPeerConnection' in window ? 'Так' : 'Ні';
+    document.getElementById('wasm').textContent = 'WebAssembly' in window ? 'Так' : 'Ні';
+    document.getElementById('sw').textContent = 'serviceWorker' in navigator ? 'Так' : 'Ні';
+    document.getElementById('localstorage').textContent = 'localStorage' in window ? 'Так' : 'Ні';
+    document.getElementById('indexeddb').textContent = 'indexedDB' in window ? 'Так' : 'Ні';
+    document.getElementById('windowSize').textContent = window.innerWidth + ' x ' + window.innerHeight;
+    document.getElementById('historyLength').textContent = history.length;
+    
+
 
     if ('connection' in navigator) {
       const conn = navigator.connection;
