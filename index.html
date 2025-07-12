@@ -13,6 +13,16 @@
     #map { width: 600px; height: 500px; margin-top: 20px; border: none; }
     button { margin-top: 20px; padding: 10px 20px; font-size: 1em; }
     #weather-icon { font-size: 2em; }
+    #wind-dir {
+    display: inline-block;
+    font-size: 50px; 
+    transform-origin: center center;
+    transition: transform 0.3s ease;  }
+    .wind-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; }
   </style>
 </head>
 <body>
@@ -67,7 +77,9 @@
     <div id="clock">Час: ...</div>
     <div id="weather">Завантаження погоди…</div>
     <div id="weather-icon"></div>
-    <div id="wind-dir" style=" transform-origin: center;" > 🧭 </div>  
+    <div class="wind-container">
+      <div id="wind-dir">🧭</div>
+    </div>
     <h2>📆 Прогноз на 3 дні</h2>
     <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
   <script>
