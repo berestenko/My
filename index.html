@@ -16,6 +16,7 @@
   </style>
 </head>
 
+
 <body>
     <button onclick="toggleTheme()">🌗 Перемкнути тему</button>
   
@@ -110,7 +111,6 @@
     document.getElementById('geolocationSupport').textContent = 'geolocation' in navigator ? 'Так' : 'Ні';
     document.getElementById('doNotTrack').textContent = navigator.doNotTrack === '1' ? 'Так' : 'Ні';
     document.getElementById('orientation').textContent = screen.orientation ? screen.orientation.type : 'Н/Д';
-    document.getElementById('gpu').textContent = getGPUInfo();
     document.getElementById('webrtc').textContent = 'RTCPeerConnection' in window ? 'Так' : 'Ні';
     document.getElementById('wasm').textContent = 'WebAssembly' in window ? 'Так' : 'Ні';
     document.getElementById('sw').textContent = 'serviceWorker' in navigator ? 'Так' : 'Ні';
