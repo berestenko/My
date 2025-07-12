@@ -118,6 +118,7 @@
     document.getElementById('indexeddb').textContent = 'indexedDB' in window ? 'Так' : 'Ні';
     document.getElementById('windowSize').textContent = window.innerWidth + ' x ' + window.innerHeight;
     document.getElementById('historyLength').textContent = history.length;
+    document.getElementById('tabActive').textContent = document.visibilityState === 'visible' ? 'Так' : 'Ні';
 
     
 
@@ -183,20 +184,7 @@ fetch('https://ipwho.is/')
       return 'Н/Д';
     }
   }
-
-
-  // Тип пристрою
-  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  document.getElementById('deviceType').textContent = isMobile ? 'Мобільний' : 'Десктоп';
-
-  // PWA
-  const isPWA = window.matchMedia('(display-mode: standalone)').matches;
-  document.getElementById('pwa').textContent = isPWA ? 'Так' : 'Ні';
-
-  // Активність вкладки
-  document.getElementById('tabActive').textContent = document.visibilityState === 'visible' ? 'Так' : 'Ні';
-
-    
+   
   </script>
   </body>
 </html>
