@@ -15,159 +15,155 @@
     #weather-icon { font-size: 2em; }
   </style>
 </head>
-
-
 <body>
     <button onclick="toggleTheme()">🌗 Перемкнути тему</button>
-  
-    <h1>👤 Інформація про пристрій</h1>
-  
-  <table id="userinfo">
-    <tr><th>IP</th><td id="ip">-</td></tr>
-    <tr><th>Місто</th><td id="city">-</td></tr>
-    <tr><th>Країна</th><td id="country">-</td></tr>
-    <tr><th>Браузер</th><td id="browser">-</td></tr>
-    <tr><th>ОС</th><td id="os">-</td></tr>
-    <tr><th>Часовий пояс</th><td id="timezone">-</td></tr>
-    <tr><th>Роздільна здатність</th><td id="resolution">-</td></tr>
-    <tr><th>DPI</th><td id="dpi">-</td></tr>
-    <tr><th>Ядер CPU</th><td id="cpu">-</td></tr>
-    <tr><th>RAM</th><td id="ram">-</td></tr>
-    <tr><th>Touch Points</th><td id="touch">-</td></tr>
-    <tr><th>Мова</th><td id="lang">-</td></tr>
-    <tr><th>Куки</th><td id="cookies">-</td></tr>
-    <tr><th>Vendor</th><td id="vendor">-</td></tr>
-    <tr><th>Тип мережі</th><td id="nettype">-</td></tr>
-    <tr><th>Швидкість</th><td id="netspeed">-</td></tr>
-    <tr><th>Ping</th><td id="rtt">-</td></tr>
-    <tr><th>Батарея</th><td id="battery">-</td></tr>
-    <tr><th>User Agent</th><td id="userAgent">-</td></tr>
-    <tr><th>App Version</th><td id="appVersion">-</td></tr>
-    <tr><th>App Name</th><td id="appName">-</td></tr>
-    <tr><th>WebGL підтримка</th><td id="webglSupport">-</td></tr>
-    <tr><th>Буфер обміну</th><td id="clipboardSupport">-</td></tr>
-    <tr><th>Геолокація</th><td id="geolocationSupport">-</td></tr>
-    <tr><th>Do Not Track</th><td id="doNotTrack">-</td></tr>
-    <tr><th>Орієнтація екрана</th><td id="orientation">-</td></tr>
-    <tr><th>GPU</th><td id="gpu">-</td></tr>
-    <tr><th>WebRTC підтримка</th><td id="webrtc">-</td></tr>
-    <tr><th>WebAssembly підтримка</th><td id="wasm">-</td></tr>
-    <tr><th>Service Workers</th><td id="sw">-</td></tr>
-    <tr><th>LocalStorage</th><td id="localstorage">-</td></tr>
-    <tr><th>IndexedDB</th><td id="indexeddb">-</td></tr>
-    <tr><th>JavaScript</th><td id="js">Так</td></tr>
-    <tr><th>Розмір вікна</th><td id="windowSize">-</td></tr>
-    <tr><th>Історія переходів</th><td id="historyLength">-</td></tr>
-    <tr><th>Активна вкладка:</th><td id="tabActive">-</td></tr>
+    <h1>👤 Інформація про пристрій та з'єднання</h1>
+    <table id="userinfo">
+      <tr><th>IP</th><td id="ip">-</td></tr>
+      <tr><th>Місто</th><td id="city">-</td></tr>
+      <tr><th>Країна</th><td id="country">-</td></tr>
+      <tr><th>Браузер</th><td id="browser">-</td></tr>
+      <tr><th>ОС</th><td id="os">-</td></tr>
+      <tr><th>Часовий пояс</th><td id="timezone">-</td></tr>
+      <tr><th>Роздільна здатність</th><td id="resolution">-</td></tr>
+      <tr><th>DPI</th><td id="dpi">-</td></tr>
+      <tr><th>Ядер CPU</th><td id="cpu">-</td></tr>
+      <tr><th>RAM</th><td id="ram">-</td></tr>
+      <tr><th>Touch Points</th><td id="touch">-</td></tr>
+      <tr><th>Мова</th><td id="lang">-</td></tr>
+      <tr><th>Куки</th><td id="cookies">-</td></tr>
+      <tr><th>Vendor</th><td id="vendor">-</td></tr>
+      <tr><th>Тип мережі</th><td id="nettype">-</td></tr>
+      <tr><th>Швидкість</th><td id="netspeed">-</td></tr>
+      <tr><th>Ping</th><td id="rtt">-</td></tr>
+      <tr><th>Батарея</th><td id="battery">-</td></tr>
+      <tr><th>App Version</th><td id="appVersion">-</td></tr>
+      <tr><th>App Name</th><td id="appName">-</td></tr>
+      <tr><th>WebGL підтримка</th><td id="webglSupport">-</td></tr>
+      <tr><th>Буфер обміну</th><td id="clipboardSupport">-</td></tr>
+      <tr><th>Геолокація</th><td id="geolocationSupport">-</td></tr>
+      <tr><th>Do Not Track</th><td id="doNotTrack">-</td></tr>
+      <tr><th>Орієнтація екрана</th><td id="orientation">-</td></tr>
+      <tr><th>GPU</th><td id="gpu">-</td></tr>
+      <tr><th>WebRTC підтримка</th><td id="webrtc">-</td></tr>
+      <tr><th>WebAssembly підтримка</th><td id="wasm">-</td></tr>
+      <tr><th>Service Workers</th><td id="sw">-</td></tr>
+      <tr><th>LocalStorage</th><td id="localstorage">-</td></tr>
+      <tr><th>IndexedDB</th><td id="indexeddb">-</td></tr>
+      <tr><th>JavaScript</th><td id="js">Так</td></tr>
+      <tr><th>Розмір вікна</th><td id="windowSize">-</td></tr>
+      <tr><th>Історія переходів</th><td id="historyLength">-</td></tr>
+      <tr><th>Активна вкладка:</th><td id="tabActive">-</td></tr>
+      <tr><th>Тип та версія браузера:</th><td id="browserVersion">-</td></tr>
+      <tr><th>GPU (через WebGL):</th><td id="gpu">-</td></tr>
+      <tr><th>Скільки ви диветесь на цю сторінку:</th><td id="uptime">-</td></tr>    
+      <tr><th>Чи відкрито сайт в iframe (захист від clickjacking):</th><td id="iframeCheck">-</td></tr>    
+      <tr><th>Чи використовується HTTPS:</th><td id="https">-</td></tr>    
+      <tr><th>Чи увімкнено Do Not Track:</th><td id="dnt">-</td></tr>        
+    </table>
+    <h2>🧭 Місцезнаходження</h2>
+    <iframe id="map"></iframe>  
+    <h1>🌤️ Поточна погода та прогноз</h1>
+    <div id="clock">Час: ...</div>
+    <div id="weather">Завантаження погоди…</div>
+    <div id="weather-icon"></div>
+    <div id="wind-dir" style="font-size:2em;">🧭</div>  
+    <h2>📆 Прогноз на 3 дні</h2>
+    <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+    fetch('https://ipwho.is/')
+      .then(res => res.json())
+      .then(location => {
+        const lat = location.latitude;
+        const lon = location.longitude;
+        document.getElementById('ip').textContent = location.ip;
+        document.getElementById('city').textContent = location.city;
+        document.getElementById('country').textContent = location.country;
+        document.getElementById("map").src =
+          `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.02},${lat - 0.02},${lon + 0.02},${lat + 0.02}&layer=mapnik&marker=${lat},${lon}`;
 
-  </table>
-  
-  <h2>🧭 Місцезнаходження</h2>
-  <iframe id="map"></iframe>  
-  <h1>🌤️ Поточна погода та прогноз</h1>
-  <div id="clock">Час: ...</div>
-  <div id="weather">Завантаження погоди…</div>
-  <div id="weather-icon"></div>
-  <div id="wind-dir" style="font-size:2em;">🧭</div>  
-  
-  <h2>📆 Прогноз на 3 дні</h2>
-  <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
-  
-
- 
-<script>
-  function toggleTheme() {
-    document.body.classList.toggle('dark');
-  }
-
-  fetch('https://ipwho.is/')
-    .then(res => res.json())
-    .then(location => {
-      const lat = location.latitude;
-      const lon = location.longitude;
-
-      document.getElementById('ip').textContent = location.ip;
-      document.getElementById('city').textContent = location.city;
-      document.getElementById('country').textContent = location.country;
-      document.getElementById("map").src =
-        `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.02},${lat - 0.02},${lon + 0.02},${lat + 0.02}&layer=mapnik&marker=${lat},${lon}`;
-
-      // Погода
-      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
-        .then(res => res.json())
-        .then(data => {
-          const weather = data.current_weather;
-          const code = weather.weathercode;
-          const icons = {
-            0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️",
-            45: "🌫️", 48: "🌫️", 51: "🌦️", 61: "🌧️",
-            71: "❄️", 80: "🌧️", 95: "⛈️"
-          };
-          document.getElementById('weather-icon').textContent = icons[code] || "❓";
-          document.getElementById('weather').innerHTML =
-            `🌡️ Температура: <strong>${weather.temperature}°C</strong><br>` +
-            `💨 Вітер: ${weather.windspeed} км/год`;
-          document.getElementById('wind-dir').style.transform = `rotate(${weather.winddirection}deg)`;
-
-          const dates = data.daily.time;
-          const max = data.daily.temperature_2m_max;
-          const min = data.daily.temperature_2m_min;
-          let rows = '';
-          for (let i = 0; i < 3; i++) {
-            rows += `<tr><td>${dates[i]}</td><td>${max[i]}°C</td><td>${min[i]}°C</td></tr>`;
-          }
-          document.getElementById('forecast').innerHTML += rows;
-        });
-    })
-    .catch(() => {
-      document.getElementById('weather').textContent = 'Не вдалося визначити місцезнаходження.';
-    });
-
-  // Інформація про систему
-  const ua = navigator.userAgent;
-  const platform = navigator.platform;
-  let browser = 'Невідомо';
-  if (ua.includes("Firefox")) browser = "Firefox";
-  else if (ua.includes("Edg")) browser = "Edge";
-  else if (ua.includes("Chrome")) browser = "Chrome";
-  else if (ua.includes("Safari")) browser = "Safari";
-
-  document.getElementById('browser').textContent = browser;
-  document.getElementById('os').textContent = platform;
-  document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  document.getElementById('resolution').textContent = screen.width + 'x' + screen.height;
-  document.getElementById('dpi').textContent = window.devicePixelRatio;
-  document.getElementById('cpu').textContent = navigator.hardwareConcurrency + ' ядер';
-  document.getElementById('ram').textContent = navigator.deviceMemory ? navigator.deviceMemory + ' ГБ' : 'Н/Д';
-  document.getElementById('touch').textContent = navigator.maxTouchPoints;
-  document.getElementById('lang').textContent = navigator.language + ' (' + navigator.languages.join(', ') + ')';
-  document.getElementById('cookies').textContent = navigator.cookieEnabled ? 'Так' : 'Ні';
-  document.getElementById('vendor').textContent = navigator.vendor;
-  document.getElementById('userAgent').textContent = navigator.userAgent;
-  document.getElementById('appVersion').textContent = navigator.appVersion;
-  document.getElementById('appName').textContent = navigator.appName;
-  document.getElementById('webglSupport').textContent = !!window.WebGLRenderingContext ? 'Так' : 'Ні';
-  document.getElementById('clipboardSupport').textContent = 'clipboard' in navigator ? 'Так' : 'Ні';
-  document.getElementById('geolocationSupport').textContent = 'geolocation' in navigator ? 'Так' : 'Ні';
-  document.getElementById('doNotTrack').textContent = navigator.doNotTrack === '1' ? 'Так' : 'Ні';
-  document.getElementById('orientation').textContent = screen.orientation ? screen.orientation.type : 'Н/Д';
-  document.getElementById('webrtc').textContent = 'RTCPeerConnection' in window ? 'Так' : 'Ні';
-  document.getElementById('wasm').textContent = 'WebAssembly' in window ? 'Так' : 'Ні';
-  document.getElementById('sw').textContent = 'serviceWorker' in navigator ? 'Так' : 'Ні';
-  document.getElementById('localstorage').textContent = 'localStorage' in window ? 'Так' : 'Ні';
-  document.getElementById('indexeddb').textContent = 'indexedDB' in window ? 'Так' : 'Ні';
-  document.getElementById('windowSize').textContent = window.innerWidth + ' x ' + window.innerHeight;
-  document.getElementById('historyLength').textContent = history.length;
-  document.getElementById('tabActive').textContent = document.visibilityState === 'visible' ? 'Так' : 'Ні';
-
-  // Годинник
-  function updateClock() {
-    document.getElementById('clock').textContent = "Час: " + new Date().toLocaleTimeString();
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-</script>
-
-  
-  </body>
+     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
+          .then(res => res.json())
+          .then(data => {
+            const weather = data.current_weather;
+            const code = weather.weathercode;
+            const icons = {
+              0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️",
+              45: "🌫️", 48: "🌫️", 51: "🌦️", 61: "🌧️",
+              71: "❄️", 80: "🌧️", 95: "⛈️"
+            };
+            document.getElementById('weather-icon').textContent = icons[code] || "❓";
+            document.getElementById('weather').innerHTML =
+              `🌡️ Температура: <strong>${weather.temperature}°C</strong><br>` +
+              `💨 Вітер: ${weather.windspeed} км/год`;
+            document.getElementById('wind-dir').style.transform = `rotate(${weather.winddirection}deg)`;
+            const dates = data.daily.time;
+            const max = data.daily.temperature_2m_max;
+            const min = data.daily.temperature_2m_min;
+            let rows = '';
+            for (let i = 0; i < 3; i++) {
+              rows += `<tr><td>${dates[i]}</td><td>${max[i]}°C</td><td>${min[i]}°C</td></tr>`;
+            }
+            document.getElementById('forecast').innerHTML += rows;
+          });
+      })
+      .catch(() => {
+        document.getElementById('weather').textContent = 'Не вдалося визначити місцезнаходження.';
+      });
+    const ua = navigator.userAgent;
+    const platform = navigator.platform;
+    let browser = 'Невідомо';
+    if (ua.includes("Firefox")) browser = "Firefox";
+    else if (ua.includes("Edg")) browser = "Edge";
+    else if (ua.includes("Chrome")) browser = "Chrome";
+    else if (ua.includes("Safari")) browser = "Safari";
+    document.getElementById('browser').textContent = browser;
+    document.getElementById('os').textContent = platform;
+    document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.getElementById('resolution').textContent = screen.width + 'x' + screen.height;
+    document.getElementById('dpi').textContent = window.devicePixelRatio;
+    document.getElementById('cpu').textContent = navigator.hardwareConcurrency + ' ядер';
+    document.getElementById('ram').textContent = navigator.deviceMemory ? navigator.deviceMemory + ' ГБ' : 'Н/Д';
+    document.getElementById('touch').textContent = navigator.maxTouchPoints;
+    document.getElementById('lang').textContent = navigator.language + ' (' + navigator.languages.join(', ') + ')';
+    document.getElementById('cookies').textContent = navigator.cookieEnabled ? 'Так' : 'Ні';
+    document.getElementById('vendor').textContent = navigator.vendor;
+    document.getElementById('appVersion').textContent = navigator.appVersion;
+    document.getElementById('appName').textContent = navigator.appName;
+    document.getElementById('webglSupport').textContent = !!window.WebGLRenderingContext ? 'Так' : 'Ні';
+    document.getElementById('clipboardSupport').textContent = 'clipboard' in navigator ? 'Так' : 'Ні';
+    document.getElementById('geolocationSupport').textContent = 'geolocation' in navigator ? 'Так' : 'Ні';
+    document.getElementById('doNotTrack').textContent = navigator.doNotTrack === '1' ? 'Так' : 'Ні';
+    document.getElementById('orientation').textContent = screen.orientation ? screen.orientation.type : 'Н/Д';
+    document.getElementById('webrtc').textContent = 'RTCPeerConnection' in window ? 'Так' : 'Ні';
+    document.getElementById('wasm').textContent = 'WebAssembly' in window ? 'Так' : 'Ні';
+    document.getElementById('sw').textContent = 'serviceWorker' in navigator ? 'Так' : 'Ні';
+    document.getElementById('localstorage').textContent = 'localStorage' in window ? 'Так' : 'Ні';
+    document.getElementById('indexeddb').textContent = 'indexedDB' in window ? 'Так' : 'Ні';
+    document.getElementById('windowSize').textContent = window.innerWidth + ' x ' + window.innerHeight;
+    document.getElementById('historyLength').textContent = history.length;
+    document.getElementById('tabActive').textContent = document.visibilityState === 'visible' ? 'Так' : 'Ні';
+    document.getElementById('browserVersion').textContent = navigator.userAgent;
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    const gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+    document.getElementById('gpu').textContent = gpu;
+    const inIframe = window.self !== window.top;
+    document.getElementById('iframeCheck').textContent = inIframe ? 'Так' : 'Ні';
+    document.getElementById('https').textContent = location.protocol === 'https:' ? 'Так' : 'Ні';
+    document.getElementById('dnt').textContent = navigator.doNotTrack === '1' ? 'Так' : 'Ні';
+    const startTime = Date.now();
+    setInterval(() => {
+      const seconds = Math.floor((Date.now() - startTime) / 1000);
+      document.getElementById('uptime').textContent = seconds + ' сек.';
+    }, 1000);
+    function updateClock() {
+      document.getElementById('clock').textContent = "Час: " + new Date().toLocaleTimeString();
+    }
+  </script>
+</body>
 </html>
