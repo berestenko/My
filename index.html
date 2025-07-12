@@ -123,31 +123,8 @@
     document.getElementById('indexeddb').textContent = 'indexedDB' in window ? 'Так' : 'Ні';
     document.getElementById('windowSize').textContent = window.innerWidth + ' x ' + window.innerHeight;
     document.getElementById('historyLength').textContent = history.length;
-   
 
-  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  document.getElementById('deviceType').textContent = isMobile ? 'Мобільний' : 'Десктоп';
-  const isPWA = window.matchMedia('(display-mode: standalone)').matches;
-  document.getElementById('pwa').textContent = isPWA ? 'Так' : 'Ні';
-  document.getElementById('tabActive').textContent = document.visibilityState === 'visible' ? 'Так' : 'Ні';
-  document.getElementById('gpu').textContent = getGPUInfo();
- 
-
-
-    if ('connection' in navigator) {
-      const conn = navigator.connection;
-      document.getElementById('nettype').textContent = conn.effectiveType;
-      document.getElementById('netspeed').textContent = conn.downlink + ' Мбіт/с';
-      document.getElementById('rtt').textContent = conn.rtt + ' мс';
-    }
-
-    if ('getBattery' in navigator) {
-      navigator.getBattery().then(bat => {
-        const charge = Math.round(bat.level * 100) + '%';
-        const charging = bat.charging ? ' (заряджається)' : ' (не заряджається)';
-        document.getElementById('battery').textContent = charge + charging;
-      });
-    }
+    
 
 
 
