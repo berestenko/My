@@ -20,7 +20,7 @@
     <button onclick="toggleTheme()">🌗 Перемкнути тему</button>
 
     <h1>👤 Інформація про пристрій</h1>
-    <table id="userinfo">
+  <table id="userinfo">
     <tr><th>IP</th><td id="ip">-</td></tr>
     <tr><th>Місто</th><td id="city">-</td></tr>
     <tr><th>Країна</th><td id="country">-</td></tr>
@@ -56,8 +56,13 @@
     <tr><th>JavaScript</th><td id="js">Так</td></tr>
     <tr><th>Розмір вікна</th><td id="windowSize">-</td></tr>
     <tr><th>Історія переходів</th><td id="historyLength">-</td></tr>
-
+    <tr><th>Геолокація</th><td id="geo">-</td></tr>
+    <tr><th>Тип пристрою:</th><td id="historyLength">-</td></tr>
+    <tr><th>PWA:</th><td id="pwa">-</td></tr>
+    <tr><th>Активна вкладка:</th><td id="tabActive">-</td></tr>
+    <tr><th>GPU:</th><td id="gpu">-</td></tr>
   </table>
+
 
   <h2>🧭 Місцезнаходження</h2>
   <iframe id="map"></iframe>  
@@ -71,7 +76,6 @@
   <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
   
 
-  
 
   <script>
     function updateClock() {
@@ -115,7 +119,56 @@
     document.getElementById('indexeddb').textContent = 'indexedDB' in window ? 'Так' : 'Ні';
     document.getElementById('windowSize').textContent = window.innerWidth + ' x ' + window.innerHeight;
     document.getElementById('historyLength').textContent = history.length;
-    
+   
+// GPU через WebGL
+  function getGPUInfo() {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Н/Д';
+    } catch (e) {
+      return 'Н/Д';
+    }
+  }
+
+  // IP-адреса через API
+  fetch('https://api.ipify.org?format=json')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('ip').textContent = data.ip;
+    })
+    .catch(() => {
+      document.getElementById('ip').textContent = 'Н/Д';
+    });
+
+  // Геолокація
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const { latitude, longitude } = pos.coords;
+        document.getElementById('geo').textContent = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+      },
+      err => {
+        document.getElementById('geo').textContent = 'Відмовлено';
+      }
+    );
+  }
+
+  // Тип пристрою
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  document.getElementById('deviceType').textContent = isMobile ? 'Мобільний' : 'Десктоп';
+
+  // PWA
+  const isPWA = window.matchMedia('(display-mode: standalone)').matches;
+  document.getElementById('pwa').textContent = isPWA ? 'Так' : 'Ні';
+
+  // Активність вкладки
+  document.getElementById('tabActive').textContent = document.visibilityState === 'visible' ? 'Так' : 'Ні';
+
+  // GPU (виклик функції)
+  document.getElementById('gpu').textContent = getGPUInfo();
+ 
 
 
     if ('connection' in navigator) {
