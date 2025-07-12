@@ -172,6 +172,33 @@ fetch('https://ipwho.is/')
     setInterval(updateClock, 1000);
     updateClock();
 
+    // GPU через WebGL
+  function getGPUInfo() {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Н/Д';
+    } catch (e) {
+      return 'Н/Д';
+    }
+  }
+
+
+  // Тип пристрою
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  document.getElementById('deviceType').textContent = isMobile ? 'Мобільний' : 'Десктоп';
+
+  // PWA
+  const isPWA = window.matchMedia('(display-mode: standalone)').matches;
+  document.getElementById('pwa').textContent = isPWA ? 'Так' : 'Ні';
+
+  // Активність вкладки
+  document.getElementById('tabActive').textContent = document.visibilityState === 'visible' ? 'Так' : 'Ні';
+
+  // GPU (виклик функції)
+  document.getElementById('gpu').textContent = getGPUInfo();
+    
   </script>
   </body>
 </html>
