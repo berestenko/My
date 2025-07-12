@@ -19,6 +19,19 @@
 <body>
     <button onclick="toggleTheme()">🌗 Перемкнути тему</button>
 
+  
+  <h2>🧭 Місцезнаходження</h2>
+  <iframe id="map"></iframe>  
+  <h1>🌤️ Поточна погода та прогноз</h1>
+  <div id="clock">Час: ...</div>
+  <div id="weather">Завантаження погоди…</div>
+  <div id="weather-icon"></div>
+  <div id="wind-dir" style="font-size:2em;">🧭</div>  
+  
+  <h2>📆 Прогноз на 3 дні</h2>
+  <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
+  
+  
     <h1>👤 Інформація про пристрій</h1>
   <table id="userinfo">
     <tr><th>IP</th><td id="ip">-</td></tr>
@@ -64,17 +77,6 @@
   </table>
 
 
-  <h2>🧭 Місцезнаходження</h2>
-  <iframe id="map"></iframe>  
-  <h1>🌤️ Поточна погода та прогноз</h1>
-  <div id="clock">Час: ...</div>
-  <div id="weather">Завантаження погоди…</div>
-  <div id="weather-icon"></div>
-  <div id="wind-dir" style="font-size:2em;">🧭</div>  
-  
-  <h2>📆 Прогноз на 3 дні</h2>
-  <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
-  
 
 
   <script>
