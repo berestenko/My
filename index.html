@@ -17,6 +17,15 @@
 </head>
 <body>
     <button onclick="toggleTheme()">🌗 Перемкнути тему</button>
+    <h1>🧭 Місцезнаходження</h1>
+    <iframe id="map"></iframe>  
+    <h1>🌤️ Поточна погода та прогноз</h1>
+    <div id="clock">Час: ...</div>
+    <div id="weather">Завантаження погоди…</div>
+    <div id="weather-icon"></div>
+    <div id="wind-dir"> 🧭 </div>  
+    <h2>📆 Прогноз на 3 дні</h2>
+    <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
     <h1>👤 Інформація про пристрій та з'єднання</h1>
     <table id="userinfo">
       <tr><th>IP</th><td id="ip">-</td></tr>
@@ -61,15 +70,6 @@
       <tr><th>Чи використовується HTTPS:</th><td id="https">-</td></tr>    
       <tr><th>Чи увімкнено Do Not Track:</th><td id="dnt">-</td></tr>        
     </table>
-    <h2>🧭 Місцезнаходження</h2>
-    <iframe id="map"></iframe>  
-    <h1>🌤️ Поточна погода та прогноз</h1>
-    <div id="clock">Час: ...</div>
-    <div id="weather">Завантаження погоди…</div>
-    <div id="weather-icon"></div>
-    <div id="wind-dir"> 🧭 </div>  
-    <h2>📆 Прогноз на 3 дні</h2>
-    <table id="forecast"><tr><th>Дата</th><th>Макс</th><th>Мін</th></tr></table>  
   <script>
     function toggleTheme() {
       document.body.classList.toggle('dark');
