@@ -58,11 +58,8 @@
     <tr><th>JavaScript</th><td id="js">Так</td></tr>
     <tr><th>Розмір вікна</th><td id="windowSize">-</td></tr>
     <tr><th>Історія переходів</th><td id="historyLength">-</td></tr>
-    <tr><th>Геолокація</th><td id="geo">-</td></tr>
-    <tr><th>Тип пристрою:</th><td id="historyLength">-</td></tr>
-    <tr><th>PWA:</th><td id="pwa">-</td></tr>
     <tr><th>Активна вкладка:</th><td id="tabActive">-</td></tr>
-    <tr><th>GPU:</th><td id="gpu">-</td></tr>
+
   </table>
   
   <h2>🧭 Місцезнаходження</h2>
@@ -166,24 +163,12 @@ fetch('https://ipwho.is/')
         document.getElementById('weather').textContent = 'Не вдалося визначити місцезнаходження.';
       });
 
-      
     function updateClock() {
       document.getElementById('clock').textContent = "Час: " + new Date().toLocaleTimeString();
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // GPU через WebGL
-  function getGPUInfo() {
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-      return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Н/Д';
-    } catch (e) {
-      return 'Н/Д';
-    }
-  }
    
   </script>
   </body>
