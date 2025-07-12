@@ -121,18 +121,19 @@
 
     
 
+fetch('https://ipwho.is/')
+  .then(res => res.json())
+  .then(location => {
+    const lat = location.latitude;
+    const lon = location.longitude;
+    document.getElementById('ip').textContent = location.ip;
+    document.getElementById('city').textContent = location.city;
+    document.getElementById('country').textContent = location.country;
+    document.getElementById("map").src =
+      `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.02},${lat - 0.02},${lon + 0.02},${lat + 0.02}&layer=mapnik&marker=${lat},${lon}`;
+  });
 
-
-    fetch('https://ipwho.is/')
-      .then(res => res.json())
-      .then(location => {
-        const lat = location.latitude;
-        const lon = location.longitude;
-        document.getElementById('ip').textContent = location.ip;
-        document.getElementById('city').textContent = location.city;
-        document.getElementById('country').textContent = location.country;
-        document.getElementById("map").src =
-          `https://www.openstreetmap.org/export/embed.html?bbox=${lon-0.02}%2C${lat-0.02}%2C${lon+0.02}%2C${lat+0.02}&layer=mapnik&marker=${lat}%2C${lon}`;
+    
 
         fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
           .then(res => res.json())
