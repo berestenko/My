@@ -3,26 +3,85 @@
   <meta charset="UTF-8" />
   <title> Ваш цифровий профіль </title>
   <style>
-    body { font-family: sans-serif; background: #f5f5f5; color: #333; padding: 30px; transition: background 0.3s, color 0.3s; }
-    h1 { color: #2c3e50; }
-    table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 10px; }
-    table { margin-top: 10px; width: 100%; max-width: 900px; }
-    th { background: #eee; }
-    .dark { background: #121212; color: #eee; }
-    .dark th { background: #333; }
-    #map { width: 600px; height: 500px; margin-top: 20px; border: none; }
-    button { margin-top: 20px; padding: 10px 20px; font-size: 1em; }
-    #weather-icon { font-size: 2em; }
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+      padding: 10px;
+    }
+    table {
+      margin-top: 10px;
+      width: 100%;
+      max-width: 900px;
+    }
+    th {
+      background: #eee;
+    }
+    .dark {
+      background: #121212;
+      color: #eee;
+    }
+    .dark th {
+      background: #333;
+    }
+    #map {
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      margin-top: 20px;
+      border: none;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+    }
+    #weather-icon {
+      font-size: 2em;
+    }
     #wind-dir {
-    display: inline-block;
-    font-size: 50px; 
-    transform-origin: center center;
-    transition: transform 0.3s ease;  }
-    .wind-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px; }
+      display: inline-block;
+      font-size: 50px;
+      transform-origin: center center;
+      transition: transform 0.3s ease;
+    }
+    .wind-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      #map {
+        height: 300px;
+      }
+      table, th, td {
+        font-size: 14px;
+        padding: 6px;
+      }
+      button {
+        width: 100%;
+      }
+      .wind-container {
+        flex-direction: column;
+        height: auto;
+      }
+      #wind-dir {
+        font-size: 40px;
+      }
+    }
   </style>
 </head>
 <body>
