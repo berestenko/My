@@ -230,10 +230,8 @@
     setInterval(() => {
       const seconds = Math.floor((Date.now() - startTime) / 1000);
       document.getElementById('uptime').textContent = seconds + ' сек.';
+      document.getElementById('clock').textContent = "Час: " + new Date().toLocaleTimeString();
     }, 1000);
-    function updateClock() {
-      document.getElementById('clock').textContent = "Час: " + new Date().toLocaleTimeString();
-    }
   </script>
 </body>
 </html>
